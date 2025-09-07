@@ -32,24 +32,22 @@
             <div class="mx-auto max-w-7xl px-6 pt-36 pb-32 sm:pt-60 lg:px-8 lg:pt-32">
                 <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                     <div class="relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl">
-                        <h1
-                            class="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white"
-                        >
+                        <h1 class="text-5xl font-semibold tracking-tight text-pretty text-white sm:text-7xl">
                             {{ t('title') }}
                         </h1>
                         <p
-                            class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:max-w-md sm:text-xl/8 lg:max-w-none dark:text-gray-400"
+                            class="mt-8 text-lg font-medium text-pretty text-white sm:max-w-md sm:text-xl/8 lg:max-w-none"
                         >
                             {{ t('text') }}
                         </p>
                         <div class="mt-10 flex items-center gap-x-6">
                             <a
                                 href="#"
-                                class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+                                class="rounded-md bg-yellow-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 {{ t('button.gallery') }}
                             </a>
-                            <a href="#" class="text-sm/6 font-semibold text-gray-900 dark:text-white">
+                            <a href="#" class="text-sm/6 font-semibold text-white hover:text-yellow-500">
                                 {{ t('button.images') }} <span aria-hidden="true">→</span>
                             </a>
                         </div>
@@ -64,10 +62,10 @@
                                 <img
                                     :src="previewImages[1]"
                                     alt=""
-                                    class="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5"
+                                    class="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                 />
                                 <div
-                                    class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset dark:ring-white/10"
+                                    class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset"
                                 />
                             </div>
                         </div>
@@ -76,20 +74,20 @@
                                 <img
                                     :src="previewImages[2]"
                                     alt=""
-                                    class="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5"
+                                    class="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                 />
                                 <div
-                                    class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset dark:ring-white/10"
+                                    class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset"
                                 />
                             </div>
                             <div class="relative">
                                 <img
                                     :src="previewImages[3]"
                                     alt=""
-                                    class="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5"
+                                    class="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                 />
                                 <div
-                                    class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset dark:ring-white/10"
+                                    class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset"
                                 />
                             </div>
                         </div>
@@ -98,20 +96,20 @@
                                 <img
                                     :src="previewImages[4]"
                                     alt=""
-                                    class="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5"
+                                    class="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                 />
                                 <div
-                                    class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset dark:ring-white/10"
+                                    class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset"
                                 />
                             </div>
                             <div class="relative">
                                 <img
                                     :src="previewImages[5]"
                                     alt=""
-                                    class="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5"
+                                    class="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                 />
                                 <div
-                                    class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset dark:ring-white/10"
+                                    class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset"
                                 />
                             </div>
                         </div>

@@ -7,11 +7,11 @@
                     <button
                         @click="close"
                         aria-label="Close"
-                        class="absolute -top-3 -right-3 z-20 rounded-full bg-white/90 p-1 shadow dark:bg-gray-800"
+                        class="absolute -top-3 -right-3 z-20 rounded-full bg-white/90 p-1 shadow"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 text-gray-700 dark:text-gray-200"
+                            class="h-5 w-5 text-gray-700"
                             viewBox="0 0 20 20"
                             fill="currentColor"
                         >
@@ -22,7 +22,7 @@
                             />
                         </svg>
                     </button>
-                    <div class="rounded bg-white p-12 shadow-lg dark:bg-gray-800">
+                    <div class="rounded bg-white p-12 shadow-lg">
                         <slot />
                     </div>
                 </div>
