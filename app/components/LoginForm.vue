@@ -10,12 +10,12 @@
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form class="space-y-6" @submit.prevent="submitLogin">
                 <div>
-                    <label for="email" class="block text-sm/6 font-medium text-gray-900 dark:text-gray-100">{{
+                    <label for="username" class="block text-sm/6 font-medium text-gray-900 dark:text-gray-100">{{
                         t('form.username')
                     }}</label>
                     <div class="mt-2">
                         <input
-                            type="email"
+                            type="text"
                             name="username"
                             id="username"
                             v-model="username"
