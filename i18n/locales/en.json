@@ -23,5 +23,9 @@
     "menu": {
         "open": "Open main menu",
         "close": "Close menu"
+    },
+    "gallery": {
+        "title": "My Gallery",
+        "imageAlt": "Wedding photo"
     }
 }

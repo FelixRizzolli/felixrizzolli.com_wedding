@@ -23,5 +23,9 @@
     "menu": {
         "open": "Hauptmenü öffnen",
         "close": "Menü schließen"
+    },
+    "gallery": {
+        "title": "Meine Bildergallerie",
+        "imageAlt": "Hochzeitsfoto"
     }
 }

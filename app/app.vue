@@ -3,7 +3,9 @@
         <Header />
         <main class="flex-1">
             <Hero />
-            <div v-if="loggedIn" class="gallery p-8">This is my Gallery!</div>
+            <div v-if="loggedIn">
+                <Gallery />
+            </div>
         </main>
         <Modal :show="showLogin" @update:show="(v) => (showLogin = v)">
             <LoginForm isModal @success="showLogin = false" />

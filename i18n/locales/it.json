@@ -23,5 +23,9 @@
     "menu": {
         "open": "Apri il menu principale",
         "close": "Chiudi il menu"
+    },
+    "gallery": {
+        "title": "La mia galleria",
+        "imageAlt": "Foto di matrimonio"
     }
 }
