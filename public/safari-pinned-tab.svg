@@ -3,7 +3,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="8 10 48 44" role="img" aria-labelledby="title desc">
   <title id="title">Wedding Rings Icon</title>
   <desc id="desc">Two interlocking wedding rings drawn with clean strokes.</desc>
-  <g stroke="#efb100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+  <g stroke="currentColor" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="24" cy="38" r="14"/>
     <circle cx="40" cy="26" r="14"/>
   </g>
