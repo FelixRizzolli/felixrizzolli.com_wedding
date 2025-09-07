@@ -5,6 +5,7 @@
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
+        "setup-test-db": "node ./scripts/setup-test-database.mjs",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
