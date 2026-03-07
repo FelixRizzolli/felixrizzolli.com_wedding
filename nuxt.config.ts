@@ -1,9 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     devtools: { enabled: true },
+    css: ['./app/assets/css/main.css'],
+    vite: {
+        plugins: [
+            tailwindcss()
+        ]
+    },
 
-    modules: ['@nuxt/image', 'nuxt-svgo', '@nuxtjs/i18n'],
+    modules: ['@nuxt/image', 'nuxt-svgo', '@nuxtjs/i18n', 'shadcn-nuxt'],
 
     i18n: {
         defaultLocale: 'de',
@@ -16,6 +24,10 @@ export default defineNuxtConfig({
 
     app: {
         head: {
+            titleTemplate: '%s | Elisabeth & Felix',
+            htmlAttrs: {
+                lang: 'de',
+            },
             link: [
                 { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
                 { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
@@ -55,4 +67,16 @@ export default defineNuxtConfig({
             ],
         },
     },
+
+    shadcn: {
+        /**
+         * Prefix for all the imported component
+         */
+        prefix: '',
+        /**
+         * Directory that the component lives in.
+         * @default "./components/ui"
+         */
+        componentDir: './components/ui'
+    }
 });
