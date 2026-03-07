@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "build": "nuxt build",
-        "dev": "nuxt dev",
+        "dev": "nuxt dev --host \"${WEDDING_HOST}\" --port \"${WEDDING_PORT}\"",
         "setup-test-db": "node ./scripts/setup-test-database.mjs",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
