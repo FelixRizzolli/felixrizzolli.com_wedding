@@ -1,5 +1,8 @@
 <template>
-    <div class="hero-component relative isolate h-screen" :style="{ backgroundImage: `url('${previewImages[0]}')` }">
+    <div
+        class="relative isolate h-screen bg-blend-darken bg-black/40 bg-cover bg-center bg-no-repeat"
+        :style="{ backgroundImage: `url(${previewImages[0]})` }"
+    >
         <div
             class="absolute top-0 right-0 left-1/2 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48"
             aria-hidden="true"
@@ -138,12 +141,3 @@
 
     const mobileMenuOpen = ref(false);
 </script>
-
-<style lang="css" scoped>
-    .hero-component {
-        background-image: url('https://www.patscheider-hof.com/wp-content/uploads/2014/05/slide21.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-</style>

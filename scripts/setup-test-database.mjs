@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 // Configuration - prefer full URI, fallback to host/port and optional auth
 const MONGODB_URI = process.env.MONGODB_URI || null;
@@ -8,7 +9,7 @@ const MONGODB_PORT = process.env.DATABASE_PORT || '27017';
 const MONGODB_DB = process.env.DATABASE_NAME || 'wedding';
 // Accept multiple possible env names for credentials
 const MONGODB_USER = process.env.DATABASE_USER || null;
-const MONGODB_PASSWORD = pprocess.env.DATABASE_PASSWORD || null;
+const MONGODB_PASSWORD = process.env.DATABASE_PASSWORD || null;
 const AUTH_SOURCE = process.env.DATABASE_AUTH_SOURCE || 'admin';
 
 function buildUri() {
@@ -62,6 +63,47 @@ async function main() {
 
         console.log('Upsert result:', res.upsertedId ? `created id=${res.upsertedId}` : 'updated existing');
         console.log('Test user ready:', username);
+        // Create / upsert images collection entries
+        const images = db.collection('images');
+        const fotoboxTotal = 245;
+        for (let i = 1; i <= fotoboxTotal; i++) {
+            const name = `HOCHZEIT-FOTOBOX-${i}`;
+            const hash = crypto.createHash('sha256').update(name).digest('hex');
+            const filename = `${hash}.jpg`;
+
+            await images.updateOne(
+                { filename },
+                {
+                    $set: {
+                        name,
+                        filename,
+                        categories: ['fotobox'],
+                        createdAt: now,
+                    },
+                },
+                { upsert: true },
+            );
+        }
+
+        const photographerTotal = 996;
+        for (let i = 1; i <= photographerTotal; i++) {
+            const name = `HOCHZEIT-PHOTOGRAPHER-${i}`;
+            const hash = crypto.createHash('sha256').update(name).digest('hex');
+            const filename = `${hash}.jpg`;
+
+            await images.updateOne(
+                { filename },
+                {
+                    $set: {
+                        name,
+                        filename,
+                        categories: ['photographer'],
+                        createdAt: now,
+                    },
+                },
+                { upsert: true },
+            );
+        }
     } finally {
         await client.close();
     }

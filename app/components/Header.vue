@@ -2,7 +2,7 @@
     <header class="absolute inset-x-0 top-0 z-50">
         <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
             <div class="flex lg:flex-1">
-                <a href="#" class="-m-1.5">
+                <a href="#" class="-m-1.5 hover:opacity-75">
                     <span class="sr-only">{{ t('title') }}</span>
                     <i-logo class="h-12 w-12" />
                 </a>
@@ -31,7 +31,7 @@
                 <button
                     type="button"
                     @click="loggedIn ? openLoginModal() : openLoginModal()"
-                    class="text-sm/6 font-semibold text-white"
+                    class="text-sm/6 font-semibold text-white hover:text-yellow-500"
                 >
                     <span v-if="loggedIn"> username </span>
                     <span v-else> {{ t('button.login') }} <span aria-hidden="true">&rarr;</span></span>
@@ -60,7 +60,7 @@
                                 v-for="item in navigation"
                                 :key="item.name"
                                 :href="item.href"
-                                class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                                class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:text-yellow-500"
                                 >{{ item.name }}</a
                             >
                         </div>
@@ -68,7 +68,7 @@
                             <button
                                 type="button"
                                 @click="openLoginModal()"
-                                class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                                class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:text-yellow-500"
                             >
                                 {{ t('button.login') }}
                             </button>
