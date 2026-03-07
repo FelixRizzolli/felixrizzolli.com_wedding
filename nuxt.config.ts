@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     devtools: { enabled: true },
 
-    modules: ['@nuxt/image', '@nuxtjs/tailwindcss', 'nuxt-svgo', 'nuxt-auth-utils', '@nuxtjs/i18n'],
+    modules: ['@nuxt/image', 'nuxt-svgo', '@nuxtjs/i18n'],
 
     i18n: {
         defaultLocale: 'de',
