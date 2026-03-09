@@ -1,1 +1,38 @@
-*                 text eol=lf
+# Normalize all text files to LF line endings in Git
+* text=auto
+
+# Explicitly declare text files
+*.html text
+*.css  text
+*.js   text
+*.ts   text
+*.php  text
+*.json text
+*.xml  text
+*.yml  text
+*.md   text
+*.txt  text
+*.sh   text
+
+# Image files should be treated as binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.svg  text
+
+# Fonts (binary)
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.eot   binary
+
+# Prevent diff on common binary files
+*.zip  binary
+*.tar  binary
+*.gz   binary
+*.ico  binary
+*.pdf  binary
+
+# Lock configuration (optional – für Teams mit Git LFS)
+*.psd lockable
