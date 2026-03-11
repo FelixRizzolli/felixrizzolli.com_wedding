@@ -11,7 +11,14 @@ export default defineNuxtConfig({
         ]
     },
 
-    modules: ['@nuxt/image', 'nuxt-svgo', '@nuxtjs/i18n', 'shadcn-nuxt'],
+    modules: ['@nuxt/image', 'nuxt-svgo', '@nuxtjs/i18n', 'shadcn-nuxt', '@pinia/nuxt'],
+
+    runtimeConfig: {
+        public: {
+            /** Base URL of the PayloadCMS API (e.g. https://api.example.com) */
+            apiUrl: process.env.API_URL ?? 'http://localhost:3000',
+        },
+    },
 
     i18n: {
         defaultLocale: 'de',

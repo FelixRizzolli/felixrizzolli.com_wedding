@@ -1,44 +1,38 @@
-<script setup lang="ts">
-import type { HTMLAttributes } from "vue"
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-} from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
-import {InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot} from "~/components/ui/input-otp";
-
-const props = defineProps<{
-  class?: HTMLAttributes["class"]
-}>()
-</script>
-
 <template>
-  <form :class="cn('flex flex-col gap-6', props.class)">
+  <form :class="cn('flex flex-col gap-6', props.class)" @submit.prevent="handleSubmit">
     <FieldGroup>
       <div class="flex flex-col items-center gap-1 text-center">
         <h1 class="text-2xl font-bold">
           Login to your account
         </h1>
         <p class="text-muted-foreground text-sm text-balance">
-          Enter your email below to login to your account
+          Enter the username and invitation token from your wedding invitation.
         </p>
       </div>
+
       <Field>
-        <FieldLabel for="email">
-          Email
+        <FieldLabel for="username">
+          Username
         </FieldLabel>
-        <Input id="email" type="email" placeholder="m@example.com" required />
+        <Input
+          id="username"
+          v-model="username"
+          type="text"
+          placeholder="felix.rizzolli"
+          required
+        />
       </Field>
+
       <Field>
-        <FieldLabel for="token">
-          Token
+        <FieldLabel for="otp">
+          Invitation Token
         </FieldLabel>
-        <InputOTP id="otp" :maxlength="12" required>
+        <InputOTP
+          id="otp"
+          v-model="invitationToken"
+          :maxlength="6"
+          required
+        >
           <InputOTPGroup class="gap-2 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
             <InputOTPSlot :index="0" />
             <InputOTPSlot :index="1" />
@@ -52,11 +46,71 @@ const props = defineProps<{
           </InputOTPGroup>
         </InputOTP>
       </Field>
+
+      <p v-if="errorMessage" role="alert" class="text-destructive text-sm text-center">
+        {{ errorMessage }}
+      </p>
+
       <Field>
-        <Button type="submit">
-          Login
+        <Button type="submit" :disabled="!isFormValid || isPending" class="w-full">
+          <span v-if="isPending">Logging in…</span>
+          <span v-else>Login</span>
         </Button>
       </Field>
     </FieldGroup>
   </form>
 </template>
+
+<script setup lang="ts">
+import type { HTMLAttributes } from 'vue'
+import { ref, computed } from 'vue'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '~/components/ui/input-otp'
+import { useAuth } from '~/composables/useAuth'
+
+const props = defineProps<{
+  class?: HTMLAttributes['class']
+}>()
+
+// ── Auth ─────────────────────────────────────────────────────────────────────
+
+const { login } = useAuth()
+
+// ── Form state ───────────────────────────────────────────────────────────────
+
+const username = ref('')
+const invitationToken = ref('')
+const errorMessage = ref<string | null>(null)
+const isPending = ref(false)
+
+/** True only when both fields are filled (OTP is complete at 6 chars). */
+const isFormValid = computed(
+    () => username.value.trim().length > 0 && invitationToken.value.length === 6,
+)
+
+// ── Submit handler ───────────────────────────────────────────────────────────
+
+/**
+ * Attempt to authenticate the guest with the provided credentials.
+ * On success the auth store persists the token and we navigate home.
+ * On failure a user-friendly error message is shown below the form.
+ */
+async function handleSubmit() {
+  if (!isFormValid.value || isPending.value) return
+
+  errorMessage.value = null
+  isPending.value = true
+
+  try {
+    await login(username.value.trim(), invitationToken.value)
+    await navigateTo('/')
+  } catch {
+    errorMessage.value = 'Invalid username or invitation token. Please try again.'
+  } finally {
+    isPending.value = false
+  }
+}
+</script>
