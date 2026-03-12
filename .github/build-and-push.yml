@@ -1,0 +1,113 @@
+name: Build and push Docker Image
+
+on:
+  release:
+    types: [published]
+  repository_dispatch:
+    types: [release-published]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: felixrizzolli-com
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.client_payload.tag || github.ref }}
+          fetch-depth: 0
+
+      - name: Set tag for metadata
+        id: set-tag
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            TAG="${{ github.event.client_payload.tag }}"
+            if [ -z "$TAG" ]; then
+              TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+            fi
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          else
+            TAG="${{ github.ref }}"
+          fi
+          
+          # Ensure tag is in refs/tags/ format for metadata action
+          if [ -n "$TAG" ] && [[ ! "$TAG" == refs/* ]]; then
+            TAG="refs/tags/$TAG"
+          fi
+          
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "Using tag: $TAG"
+          
+          # Extract version components (remove refs/tags/ and v prefix)
+          VERSION=$(echo "$TAG" | sed 's|refs/tags/v||' | sed 's|refs/tags/||')
+          if [ -n "$VERSION" ] && [[ "$VERSION" =~ ^[0-9] ]]; then
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            # Extract major.minor and major
+            MAJOR=$(echo "$VERSION" | cut -d. -f1)
+            MINOR=$(echo "$VERSION" | cut -d. -f2)
+            echo "major=$MAJOR" >> $GITHUB_OUTPUT
+            echo "major_minor=${MAJOR}.${MINOR}" >> $GITHUB_OUTPUT
+            echo "Extracted version: $VERSION (major: $MAJOR, minor: $MINOR)"
+          fi
+          
+          # Set as environment variable for metadata action
+          echo "DOCKER_METADATA_REF=$TAG" >> $GITHUB_ENV
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Wedding
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}-wedding
+          tags: |
+            type=raw,value=latest
+            type=raw,value=${{ steps.set-tag.outputs.version }},enable=${{ steps.set-tag.outputs.version != '' }}
+            type=raw,value=${{ steps.set-tag.outputs.major_minor }},enable=${{ steps.set-tag.outputs.major_minor != '' }}
+            type=raw,value=${{ steps.set-tag.outputs.major }},enable=${{ steps.set-tag.outputs.major != '' }}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=ref,event=tag
+            type=sha,enable=${{ github.event_name != 'release' && steps.set-tag.outputs.version == '' }}
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
+          DOCKER_METADATA_PR_HEAD_SHA: true
+          GITHUB_REF: ${{ env.DOCKER_METADATA_REF || github.ref }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Wedding Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Trigger deployment
+        uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          repository: FelixRizzolli/felixrizzolli.com
+          event-type: wedding-updated
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
