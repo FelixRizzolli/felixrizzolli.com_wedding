@@ -48,8 +48,8 @@ importers:
         specifier: 3.0.4
         version: 3.0.4(typescript@5.9.2)(vue@3.5.30(typescript@5.9.2))
       reka-ui:
-        specifier: 2.9.0
-        version: 2.9.0(vue@3.5.30(typescript@5.9.2))
+        specifier: 2.9.1
+        version: 2.9.1(vue@3.5.30(typescript@5.9.2))
       tailwind-merge:
         specifier: 3.5.0
         version: 3.5.0
@@ -4182,8 +4182,8 @@ packages:
     resolution: {integrity: sha512-iETxpjK6YoRWJG5o6hXLwvjYAoW+FEZn9os0PD/b6AP6xQwsa/Y7lCVgIixBbUPMfhu+i2LtdeAqVTgGlQarfA==}
     hasBin: true
 
-  reka-ui@2.9.0:
-    resolution: {integrity: sha512-5dpp80u109iLTbRBu+jhAk8R/877/JN20gYGjb3GsuAgS7E/5QTX5ZxuzWtZAVbChBDYDpXc8pkaQAFpa6s+4w==}
+  reka-ui@2.9.1:
+    resolution: {integrity: sha512-5Oa77f4VVNgUsMtGZKh3AnMCjJvA4TJ9phcN+TxPfGutdENaqleXO+NvhCkgK02PEHcyys8fqIF9CdcvSq5Flw==}
     peerDependencies:
       vue: '>= 3.4.0'
 
@@ -9299,7 +9299,7 @@ snapshots:
 
   regexp-tree@0.1.27: {}
 
-  reka-ui@2.9.0(vue@3.5.30(typescript@5.9.2)):
+  reka-ui@2.9.1(vue@3.5.30(typescript@5.9.2)):
     dependencies:
       '@floating-ui/dom': 1.7.6
       '@floating-ui/vue': 1.1.11(vue@3.5.30(typescript@5.9.2))
@@ -10037,7 +10037,7 @@ snapshots:
   vue-input-otp@0.3.2(typescript@5.9.2)(vue@3.5.30(typescript@5.9.2)):
     dependencies:
       '@vueuse/core': 12.8.2(typescript@5.9.2)
-      reka-ui: 2.9.0(vue@3.5.30(typescript@5.9.2))
+      reka-ui: 2.9.1(vue@3.5.30(typescript@5.9.2))
       vue: 3.5.30(typescript@5.9.2)
     transitivePeerDependencies:
       - '@vue/composition-api'
