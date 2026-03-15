@@ -10,7 +10,7 @@
           alt="Authentication"
           class="absolute inset-0 h-full w-full object-cover"
           height="{1080}"
-          src="https://www.skyweaver.net/images/media/wallpapers/wallpaper2.jpg"
+          :src="loginImage"
           width="{1920}"
       >
     </div>
@@ -18,4 +18,14 @@
 </template>
 
 <script setup lang="ts">
+
+definePageMeta({
+  layout: 'fullscreen',
+})
+
+const loginImage = (
+    "https://wedding-cdn.felixrizzolli.com/"
+    + "91b9d01cf24adda663987a4418496f207fe638e08b5d9e147291e86c4d14999a.jpg"
+);
+
 </script>
