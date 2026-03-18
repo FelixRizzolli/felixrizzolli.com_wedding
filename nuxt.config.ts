@@ -11,6 +11,13 @@ export default defineNuxtConfig({
         ]
     },
 
+    components: [
+        {
+            path: '~/components',
+            extensions: ['vue'],
+        },
+    ],
+
     modules: ['@nuxt/image', 'nuxt-svgo', '@nuxtjs/i18n', 'shadcn-nuxt', '@pinia/nuxt'],
 
     runtimeConfig: {
