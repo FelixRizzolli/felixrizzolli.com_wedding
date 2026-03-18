@@ -5,10 +5,23 @@ export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     devtools: { enabled: true },
     css: ['./app/assets/css/main.css'],
+
     vite: {
         plugins: [
-            tailwindcss()
-        ]
+            tailwindcss(),
+        ],
+
+        // Pre-bundle runtime-discovered dependencies to avoid page reloads in dev
+        optimizeDeps: {
+            include: [
+                'graphql-request',
+                'lucide-vue-next',
+                'class-variance-authority',
+                'reka-ui',
+                'clsx',
+                'tailwind-merge',
+            ],
+        },
     },
 
     components: [
@@ -63,21 +76,22 @@ export default defineNuxtConfig({
         autoImportPath: '~/assets/images/',
         customComponent: 'MyIcon',
         svgoConfig: {
-            // multipass: true, // optimization will be applied until the result differs from the one obtained in the previous step
             plugins: [
                 {
-                    name: 'preset-default', //  default set of plugins, https://svgo.dev/docs/preset-default/#plugins-list
+                    // Default set of plugins: https://svgo.dev/docs/preset-default/#plugins-list
+                    // NOTE: removeViewBox is NOT part of preset-default — omitting it here
+                    // keeps viewBox intact (SVGO's default behaviour when it's not listed).
+                    name: 'preset-default',
                     params: {
                         overrides: {
-                            removeViewBox: false, // viewbox is required for svg to scale properly
-                            mergePaths: false, // disable mergePaths to preserve all paths
-                            collapseGroups: false, // disable collapseGroups to preserve groups
+                            mergePaths: false,     // preserve all paths
+                            collapseGroups: false, // preserve groups
                         },
                     },
                 },
-                // additional plugins, https://svgo.dev/docs/plugins/
-                'removeDimensions', // remove width and height attributes,
-                'removeXMLNS', // remove xmlns attribute
+                // Additional plugins: https://svgo.dev/docs/plugins/
+                'removeDimensions', // remove width and height attributes
+                'removeXMLNS',      // remove xmlns attribute
             ],
         },
     },
@@ -91,6 +105,6 @@ export default defineNuxtConfig({
          * Directory that the component lives in.
          * @default "./components/ui"
          */
-        componentDir: './components/ui'
-    }
+        componentDir: './components/ui',
+    },
 });
