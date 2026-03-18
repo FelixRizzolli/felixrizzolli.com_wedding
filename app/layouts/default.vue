@@ -1,9 +1,9 @@
 <template>
-  <Header />
+  <LayoutHeader />
   <main>
     <slot />
   </main>
-  <Footer />
+  <LayoutFooter />
 </template>
 
 <script lang="ts" setup>

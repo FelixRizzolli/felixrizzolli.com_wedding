@@ -2,7 +2,7 @@
   <div class="flex min-h-svh w-full">
     <div class="flex w-full items-center justify-center p-6 lg:w-1/2">
       <div class="w-full max-w-xs">
-        <LoginForm />
+        <LayoutLoginForm />
       </div>
     </div>
     <div class="relative hidden w-1/2 lg:block">
