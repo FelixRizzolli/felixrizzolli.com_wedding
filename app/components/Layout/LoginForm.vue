@@ -15,11 +15,11 @@
           Username
         </FieldLabel>
         <Input
-          id="username"
-          v-model="username"
-          type="text"
-          placeholder="felix.rizzolli"
-          required
+            id="username"
+            v-model="username"
+            type="text"
+            placeholder="felix.rizzolli"
+            required
         />
       </Field>
 
@@ -28,10 +28,10 @@
           Invitation Token
         </FieldLabel>
         <InputOTP
-          id="otp"
-          v-model="invitationToken"
-          :maxlength="6"
-          required
+            id="otp"
+            v-model="invitationToken"
+            :maxlength="6"
+            required
         >
           <InputOTPGroup class="gap-2 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
             <InputOTPSlot :index="0" />
@@ -75,11 +75,7 @@ const props = defineProps<{
   class?: HTMLAttributes['class']
 }>()
 
-// ── Auth ─────────────────────────────────────────────────────────────────────
-
 const { login } = useAuth()
-
-// ── Form state ───────────────────────────────────────────────────────────────
 
 const username = ref('')
 const invitationToken = ref('')
@@ -90,8 +86,6 @@ const isPending = ref(false)
 const isFormValid = computed(
     () => username.value.trim().length > 0 && invitationToken.value.length === 6,
 )
-
-// ── Submit handler ───────────────────────────────────────────────────────────
 
 /**
  * Attempt to authenticate the guest with the provided credentials.

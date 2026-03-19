@@ -25,7 +25,13 @@
         "close": "Menü schließen"
     },
     "gallery": {
-        "title": "Meine Bildergallerie",
-        "imageAlt": "Hochzeitsfoto"
+        "title": "Bildergalerie",
+        "subtitle": "Alle Fotos unseres besonderen Tages",
+        "imageAlt": "Hochzeitsfoto",
+        "error": {
+            "title": "Bilder konnten nicht geladen werden",
+            "description": "Bitte versuche es später erneut.",
+            "retry": "Erneut versuchen"
+        }
     }
 }

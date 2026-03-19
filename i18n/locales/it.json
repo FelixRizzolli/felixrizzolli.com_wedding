@@ -25,7 +25,13 @@
         "close": "Chiudi il menu"
     },
     "gallery": {
-        "title": "La mia galleria",
-        "imageAlt": "Foto di matrimonio"
+        "title": "Galleria di nozze",
+        "subtitle": "Tutte le foto del nostro giorno speciale",
+        "imageAlt": "Foto di matrimonio",
+        "error": {
+            "title": "Impossibile caricare le immagini",
+            "description": "Riprova più tardi.",
+            "retry": "Riprova"
+        }
     }
 }

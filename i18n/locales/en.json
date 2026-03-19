@@ -25,7 +25,13 @@
         "close": "Close menu"
     },
     "gallery": {
-        "title": "My Gallery",
-        "imageAlt": "Wedding photo"
+        "title": "Wedding Gallery",
+        "subtitle": "All photos from our special day",
+        "imageAlt": "Wedding photo",
+        "error": {
+            "title": "Could not load images",
+            "description": "Please try again later.",
+            "retry": "Try again"
+        }
     }
 }
