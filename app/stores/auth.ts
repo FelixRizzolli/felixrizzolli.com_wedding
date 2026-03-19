@@ -77,8 +77,28 @@ export const useAuthStore = defineStore('auth', () => {
 
   // ── Getters ───────────────────────────────────────────────────────────────
 
-  /** `true` when a token is present (the guest has logged in). */
-  const isAuthenticated = computed(() => !!token.value)
+  /**
+   * `true` only when a token is present **and** not yet expired.
+   *
+   * The JWT `exp` claim is decoded client-side (no signature verification
+   * needed — we just need the timestamp). This prevents the store from
+   * reporting the user as authenticated after the 2-hour Payload default
+   * (or the configured 30-day guest expiry) has elapsed.
+   */
+  const isAuthenticated = computed(() => {
+    if (!token.value) return false
+    try {
+      const parts = token.value.split('.')
+      if (parts.length !== 3) return false
+      const base64 = parts[1]!
+        .replace(/-/g, '+')
+        .replace(/_/g, '/')
+      const claims = JSON.parse(atob(base64))
+      return typeof claims.exp === 'number' && claims.exp > Math.floor(Date.now() / 1000)
+    } catch {
+      return false
+    }
+  })
 
   // ── Actions ───────────────────────────────────────────────────────────────
 
