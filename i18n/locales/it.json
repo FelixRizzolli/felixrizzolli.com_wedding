@@ -33,6 +33,10 @@
         "title": "Galleria di nozze",
         "subtitle": "Tutte le foto del nostro giorno speciale",
         "imageAlt": "Foto di matrimonio",
+        "empty": {
+            "title": "Ancora nessuna immagine",
+            "description": "Torna più tardi – le foto verranno caricate presto."
+        },
         "error": {
             "title": "Impossibile caricare le immagini",
             "description": "Riprova più tardi.",

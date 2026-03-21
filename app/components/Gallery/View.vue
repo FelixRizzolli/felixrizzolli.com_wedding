@@ -18,10 +18,8 @@
       <div class="mb-4 rounded-full bg-muted p-6">
         <ImageIcon class="size-10 text-muted-foreground" />
       </div>
-      <p class="text-lg font-semibold">No images yet</p>
-      <p class="mt-1 text-sm text-muted-foreground">
-        Check back later for photos from the wedding.
-      </p>
+      <p class="text-lg font-semibold">{{ t('gallery.empty.title') }}</p>
+      <p class="mt-1 text-sm text-muted-foreground">{{ t('gallery.empty.description') }}</p>
     </div>
 
     <!-- Image grid -->
@@ -30,21 +28,22 @@
         v-for="(image, index) in images"
         :key="image.ident"
         class="group relative aspect-square cursor-zoom-in overflow-hidden rounded-xl bg-muted shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        :aria-label="`${t('gallery.imageAlt')} ${index + 1}`"
         @click="lightboxIndex = index"
       >
         <img
           :src="image.cloudflareLink || image.onedriveLink"
-          :alt="image.ident"
+          :alt="`${t('gallery.imageAlt')} – ${image.ident}`"
           class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
-        <div
+        <span
           class="pointer-events-none absolute inset-0 flex items-end bg-linear-to-t from-black/70 via-black/10 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         >
           <span class="truncate text-xs font-medium tracking-wide text-white drop-shadow">
             {{ image.ident }}
           </span>
-        </div>
+        </span>
       </button>
     </div>
 
@@ -88,6 +87,8 @@ const props = withDefaults(defineProps<{
 defineEmits<{
   'page-change': [page: number]
 }>()
+
+const { t } = useI18n()
 
 const lightboxIndex = ref<number | null>(null)
 </script>

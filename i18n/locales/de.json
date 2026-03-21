@@ -33,6 +33,10 @@
         "title": "Bildergalerie",
         "subtitle": "Alle Fotos unseres besonderen Tages",
         "imageAlt": "Hochzeitsfoto",
+        "empty": {
+            "title": "Noch keine Bilder",
+            "description": "Schau später wieder vorbei – die Fotos werden bald hochgeladen."
+        },
         "error": {
             "title": "Bilder konnten nicht geladen werden",
             "description": "Bitte versuche es später erneut.",

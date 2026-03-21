@@ -33,6 +33,10 @@
         "title": "Wedding Gallery",
         "subtitle": "All photos from our special day",
         "imageAlt": "Wedding photo",
+        "empty": {
+            "title": "No images yet",
+            "description": "Check back later — photos will be uploaded soon."
+        },
         "error": {
             "title": "Could not load images",
             "description": "Please try again later.",
