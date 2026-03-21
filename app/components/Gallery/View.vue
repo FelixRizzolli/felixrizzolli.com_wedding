@@ -52,8 +52,9 @@
     <!-- Pagination -->
     <div
       v-if="totalPages > 1"
-      class="flex items-center justify-center gap-1.5 pt-2"
+      class="flex items-center justify-center gap-2 pt-2"
     >
+      <!-- Previous -->
       <Button
         variant="outline"
         size="icon"
@@ -64,10 +65,16 @@
         <ChevronLeftIcon class="size-4" />
       </Button>
 
+      <!-- Mobile: compact page indicator -->
+      <span class="sm:hidden text-sm text-muted-foreground px-2 select-none tabular-nums">
+        {{ currentPage }} / {{ totalPages }}
+      </span>
+
+      <!-- Desktop: numbered buttons -->
       <template v-for="item in paginationItems" :key="item">
         <span
           v-if="item === ELLIPSIS"
-          class="px-2 text-muted-foreground select-none"
+          class="hidden sm:inline px-1 text-muted-foreground select-none"
         >
           …
         </span>
@@ -75,6 +82,7 @@
           v-else
           :variant="item === currentPage ? 'default' : 'outline'"
           size="icon"
+          class="hidden sm:inline-flex"
           :aria-label="`Go to page ${item}`"
           :aria-current="item === currentPage ? 'page' : undefined"
           @click="$emit('page-change', item)"
@@ -83,6 +91,7 @@
         </Button>
       </template>
 
+      <!-- Next -->
       <Button
         variant="outline"
         size="icon"
