@@ -73,12 +73,16 @@ import { useAuth } from '~/composables/useAuth'
 
 const props = defineProps<{
   class?: HTMLAttributes['class']
+  /** Pre-fill the username field from a URL query parameter */
+  initialUsername?: string
+  /** Pre-fill the invitation token field from a URL query parameter */
+  initialToken?: string
 }>()
 
 const { login } = useAuth()
 
-const username = ref('')
-const invitationToken = ref('')
+const username = ref(props.initialUsername ?? '')
+const invitationToken = ref(props.initialToken ?? '')
 const errorMessage = ref<string | null>(null)
 const isPending = ref(false)
 
