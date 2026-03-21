@@ -15,12 +15,26 @@
           <span class="hidden sm:inline">All rights reserved.</span>
         </p>
 
+        <!-- GitHub -->
+        <a
+          href="https://github.com/FelixRizzolli/felixrizzolli.com_wedding"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-1.5 text-xs text-muted-foreground opacity-70 transition-opacity hover:opacity-100"
+          aria-label="View source on GitHub"
+        >
+          <GithubIcon class="size-4" />
+          <span class="hidden sm:inline">Open Source</span>
+        </a>
+
       </div>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
+import { GithubIcon } from 'lucide-vue-next'
+
 const year = new Date().getFullYear()
 </script>
 
