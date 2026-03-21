@@ -33,5 +33,11 @@
             "description": "Bitte versuche es später erneut.",
             "retry": "Erneut versuchen"
         }
+    },
+    "nav": {
+        "home": "Startseite",
+        "profile": "Profil",
+        "settings": "Einstellungen",
+        "logout": "Abmelden"
     }
 }

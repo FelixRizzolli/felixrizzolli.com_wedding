@@ -33,5 +33,11 @@
             "description": "Please try again later.",
             "retry": "Try again"
         }
+    },
+    "nav": {
+        "home": "Home",
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Log out"
     }
 }

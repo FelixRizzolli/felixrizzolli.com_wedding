@@ -33,5 +33,11 @@
             "description": "Riprova più tardi.",
             "retry": "Riprova"
         }
+    },
+    "nav": {
+        "home": "Home",
+        "profile": "Profilo",
+        "settings": "Impostazioni",
+        "logout": "Esci"
     }
 }
