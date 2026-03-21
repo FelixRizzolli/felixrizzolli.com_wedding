@@ -31,6 +31,8 @@
             id="otp"
             v-model="invitationToken"
             :maxlength="6"
+            :pattern="REGEXP_ONLY_DIGITS_AND_CHARS"
+            inputmode="text"
             required
         >
           <InputOTPGroup class="gap-2 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
@@ -69,6 +71,7 @@ import { Button } from '@/components/ui/button'
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '~/components/ui/input-otp'
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'vue-input-otp'
 import { useAuth } from '~/composables/useAuth'
 
 const props = defineProps<{
