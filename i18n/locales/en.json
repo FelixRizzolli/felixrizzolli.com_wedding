@@ -39,5 +39,23 @@
         "profile": "Profile",
         "settings": "Settings",
         "logout": "Log out"
+    },
+    "settings": {
+        "title": "Settings",
+        "language": {
+            "title": "Language",
+            "description": "Choose your preferred language."
+        },
+        "theme": {
+            "title": "Theme",
+            "description": "Select how the app should look.",
+            "system": "System",
+            "light": "Light",
+            "dark": "Dark"
+        }
+    },
+    "profile": {
+        "title": "Profile",
+        "loggedInAs": "Logged in as"
     }
 }

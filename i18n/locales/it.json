@@ -39,5 +39,23 @@
         "profile": "Profilo",
         "settings": "Impostazioni",
         "logout": "Esci"
+    },
+    "settings": {
+        "title": "Impostazioni",
+        "language": {
+            "title": "Lingua",
+            "description": "Scegli la tua lingua preferita."
+        },
+        "theme": {
+            "title": "Tema",
+            "description": "Seleziona come dovrebbe apparire l'app.",
+            "system": "Sistema",
+            "light": "Chiaro",
+            "dark": "Scuro"
+        }
+    },
+    "profile": {
+        "title": "Profilo",
+        "loggedInAs": "Connesso come"
     }
 }

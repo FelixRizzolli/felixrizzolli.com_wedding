@@ -20,6 +20,7 @@ export default defineNuxtConfig({
                 'reka-ui',
                 'clsx',
                 'tailwind-merge',
+                '@vueuse/core',
             ],
         },
     },

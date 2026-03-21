@@ -39,5 +39,23 @@
         "profile": "Profil",
         "settings": "Einstellungen",
         "logout": "Abmelden"
+    },
+    "settings": {
+        "title": "Einstellungen",
+        "language": {
+            "title": "Sprache",
+            "description": "Wähle deine bevorzugte Sprache."
+        },
+        "theme": {
+            "title": "Design",
+            "description": "Wähle, wie die App aussehen soll.",
+            "system": "System",
+            "light": "Hell",
+            "dark": "Dunkel"
+        }
+    },
+    "profile": {
+        "title": "Profil",
+        "loggedInAs": "Angemeldet als"
     }
 }
