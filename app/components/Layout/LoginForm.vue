@@ -3,16 +3,16 @@
     <FieldGroup>
       <div class="flex flex-col items-center gap-1 text-center">
         <h1 class="text-2xl font-bold">
-          Login to your account
+          {{ t('form.login.title') }}
         </h1>
         <p class="text-muted-foreground text-sm text-balance">
-          Enter the username and invitation token from your wedding invitation.
+          {{ t('form.login.description') }}
         </p>
       </div>
 
       <Field>
         <FieldLabel for="username">
-          Username
+          {{ t('form.username') }}
         </FieldLabel>
         <Input
             id="username"
@@ -25,7 +25,7 @@
 
       <Field>
         <FieldLabel for="otp">
-          Invitation Token
+          {{ t('form.login.invitationToken') }}
         </FieldLabel>
         <InputOTP
             id="otp"
@@ -55,8 +55,8 @@
 
       <Field>
         <Button type="submit" :disabled="!isFormValid || isPending" class="w-full">
-          <span v-if="isPending">Logging in…</span>
-          <span v-else>Login</span>
+          <span v-if="isPending">{{ t('form.login.pending') }}</span>
+          <span v-else>{{ t('form.login.submit') }}</span>
         </Button>
       </Field>
     </FieldGroup>
@@ -83,22 +83,17 @@ const props = defineProps<{
 }>()
 
 const { login } = useAuth()
+const { t } = useI18n()
 
 const username = ref(props.initialUsername ?? '')
 const invitationToken = ref(props.initialToken ?? '')
 const errorMessage = ref<string | null>(null)
 const isPending = ref(false)
 
-/** True only when both fields are filled (OTP is complete at 6 chars). */
 const isFormValid = computed(
     () => username.value.trim().length > 0 && invitationToken.value.length === 6,
 )
 
-/**
- * Attempt to authenticate the guest with the provided credentials.
- * On success the auth store persists the token and we navigate home.
- * On failure a user-friendly error message is shown below the form.
- */
 async function handleSubmit() {
   if (!isFormValid.value || isPending.value) return
 
@@ -109,7 +104,7 @@ async function handleSubmit() {
     await login(username.value.trim(), invitationToken.value)
     await navigateTo('/')
   } catch {
-    errorMessage.value = 'Invalid username or invitation token. Please try again.'
+    errorMessage.value = t('form.login.error')
   } finally {
     isPending.value = false
   }

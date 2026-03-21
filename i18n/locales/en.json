@@ -15,7 +15,12 @@
     },
     "form": {
         "login": {
-            "title": "Sign in to your account"
+            "title": "Sign in to your account",
+            "description": "Enter the username and invitation token from your wedding invitation.",
+            "invitationToken": "Invitation Token",
+            "error": "Invalid username or invitation token. Please try again.",
+            "pending": "Signing in…",
+            "submit": "Sign in"
         },
         "username": "Username",
         "password": "Password"

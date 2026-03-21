@@ -15,7 +15,12 @@
     },
     "form": {
         "login": {
-            "title": "Melde dich in deinem Konto an"
+            "title": "Melde dich in deinem Konto an",
+            "description": "Gib den Benutzernamen und den Einladungscode aus deiner Hochzeitseinladung ein.",
+            "invitationToken": "Einladungscode",
+            "error": "Ungültiger Benutzername oder Einladungscode. Bitte versuche es erneut.",
+            "pending": "Anmelden…",
+            "submit": "Anmelden"
         },
         "username": "Benutzername",
         "password": "Passwort"

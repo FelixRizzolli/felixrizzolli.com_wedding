@@ -15,7 +15,12 @@
     },
     "form": {
         "login": {
-            "title": "Accedi al tuo account"
+            "title": "Accedi al tuo account",
+            "description": "Inserisci il nome utente e il token di invito dalla tua partecipazione di nozze.",
+            "invitationToken": "Token di invito",
+            "error": "Nome utente o token di invito non valido. Riprova.",
+            "pending": "Accesso in corso…",
+            "submit": "Accedi"
         },
         "username": "Nome utente",
         "password": "Password"
