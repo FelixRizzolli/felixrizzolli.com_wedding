@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-8">
+  <div class="space-y-6">
 
     <!-- Loading skeleton -->
     <div v-if="isLoading" class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4">
@@ -47,20 +47,10 @@
       </button>
     </div>
 
-    <!-- Pagination -->
-    <GalleryPagination
-      :total-pages="totalPages"
-      :current-page="currentPage"
-      @page-change="$emit('page-change', $event)"
-    />
-
   </div>
 
   <!-- Lightbox -->
-  <GalleryLightbox
-    v-model="lightboxIndex"
-    :images="images"
-  />
+  <GalleryLightbox v-model="lightboxIndex" :images="images" />
 </template>
 
 <script setup lang="ts">
@@ -68,24 +58,13 @@ import { ref } from 'vue'
 import { ImageIcon } from 'lucide-vue-next'
 import { Skeleton } from '~/components/ui/skeleton'
 import GalleryLightbox from '~/components/Gallery/Lightbox.vue'
-import GalleryPagination from '~/components/Gallery/Pagination.vue'
 import type { WeddingImage } from '~/types/types'
 
 const SKELETON_COUNT = 12
 
-const props = withDefaults(defineProps<{
+defineProps<{
   images: WeddingImage[]
-  totalPages: number
-  currentPage: number
   isLoading: boolean
-}>(), {
-  totalPages: 1,
-  currentPage: 1,
-  isLoading: false,
-})
-
-defineEmits<{
-  'page-change': [page: number]
 }>()
 
 const { t } = useI18n()

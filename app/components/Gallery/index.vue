@@ -25,13 +25,18 @@
       </Button>
     </div>
 
-    <!-- Gallery view -->
+    <!-- Gallery view (images + lightbox) -->
     <GalleryView
       v-else
       :images="images"
+      :is-loading="pending"
+    />
+
+    <!-- Pagination -->
+    <CustomPagination
+      v-if="!error && totalPages > 1"
       :total-pages="totalPages"
       :current-page="currentPage"
-      :is-loading="pending"
       @page-change="handlePageChange"
     />
   </section>
@@ -43,6 +48,7 @@ import { GraphQLClient } from 'graphql-request'
 import { AlertCircleIcon } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import GalleryView from '@/components/Gallery/View.vue'
+import CustomPagination from '@/components/Custom/Pagination.vue'
 import { useAuth } from '~/composables/useAuth'
 import type { WeddingImage } from '~/types/types'
 
@@ -78,7 +84,8 @@ interface WeddingImagesData {
 }
 
 const config = useRuntimeConfig()
-const { token } = useAuth()
+
+const { token, logout } = useAuth()
 
 const images = ref<WeddingImage[]>([])
 const totalPages = ref(1)
@@ -105,11 +112,8 @@ async function fetchImages(page: number): Promise<void> {
     images.value = data.WeddingImages.docs
     totalPages.value = data.WeddingImages.totalPages
   } catch (err) {
-    // If the API returns 401/403 the token is expired or invalid — clear
-    // auth state and redirect to login so the user gets a fresh session.
     const message = err instanceof Error ? err.message : String(err)
     if (message.includes('not allowed') || message.includes('401') || message.includes('403')) {
-      const { logout } = useAuth()
       logout()
       await navigateTo('/login')
       return
@@ -127,12 +131,10 @@ function refetch() {
 function handlePageChange(page: number) {
   currentPage.value = page
   fetchImages(page)
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  if (import.meta.client) window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 onMounted(() => fetchImages(1))
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

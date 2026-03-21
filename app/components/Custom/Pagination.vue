@@ -6,8 +6,7 @@
     :sibling-count="1"
     :page="currentPage"
     show-edges
-    @update:page="$emit('page-change', $event)"
-  >
+    @update:page="$emit('page-change', $event)">
     <PaginationContent v-slot="{ items }">
       <PaginationPrevious />
 
