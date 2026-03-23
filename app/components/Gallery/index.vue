@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { GraphQLClient } from 'graphql-request'
-import { AlertCircleIcon } from 'lucide-vue-next'
+import { AlertCircleIcon } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import GalleryView from '@/components/Gallery/View.vue'
 import CustomPagination from '@/components/Custom/Pagination.vue'

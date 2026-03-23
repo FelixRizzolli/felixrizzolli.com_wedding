@@ -63,7 +63,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { XIcon } from 'lucide-vue-next'
+import { XIcon } from '@lucide/vue'
 import {
   Carousel,
   CarouselContent,

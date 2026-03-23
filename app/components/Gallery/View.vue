@@ -55,7 +55,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ImageIcon } from 'lucide-vue-next'
+import { ImageIcon } from '@lucide/vue'
 import { Skeleton } from '~/components/ui/skeleton'
 import GalleryLightbox from '~/components/Gallery/Lightbox.vue'
 import type { WeddingImage } from '~/types/types'

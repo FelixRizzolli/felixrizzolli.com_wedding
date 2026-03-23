@@ -63,7 +63,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Monitor, Sun, Moon } from 'lucide-vue-next'
+import { Monitor, Sun, Moon } from '@lucide/vue'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { useTheme, type ThemeMode } from '~/composables/useTheme'

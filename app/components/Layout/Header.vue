@@ -86,7 +86,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { User, Settings, LogOut } from 'lucide-vue-next'
+import { User, Settings, LogOut } from '@lucide/vue'
 import {
   DropdownMenu,
   DropdownMenuTrigger,

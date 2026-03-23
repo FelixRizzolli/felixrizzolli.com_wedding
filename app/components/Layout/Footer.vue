@@ -23,7 +23,7 @@
           class="flex items-center gap-1.5 text-xs text-muted-foreground opacity-70 transition-opacity hover:opacity-100"
           aria-label="View source on GitHub"
         >
-          <GithubIcon class="size-4" />
+          <GitHubIcon class="size-4" />
           <span class="hidden sm:inline">Open Source</span>
         </a>
 
@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { GithubIcon } from 'lucide-vue-next'
+import { GitHubIcon } from 'vue3-simple-icons'
 
 const year = new Date().getFullYear()
 </script>

@@ -15,7 +15,7 @@ export default defineNuxtConfig({
         optimizeDeps: {
             include: [
                 'graphql-request',
-                'lucide-vue-next',
+                '@lucide/vue',
                 'class-variance-authority',
                 'reka-ui',
                 'clsx',
