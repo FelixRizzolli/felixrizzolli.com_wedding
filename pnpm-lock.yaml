@@ -28,8 +28,8 @@ importers:
   .:
     dependencies:
       '@lucide/vue':
-        specifier: 1.0.2
-        version: 1.0.2(vue@3.5.30(typescript@5.9.2))
+        specifier: 1.6.0
+        version: 1.6.0(vue@3.5.30(typescript@5.9.2))
       '@nuxt/image':
         specifier: 2.0.0
         version: 2.0.0(db0@0.3.4)(ioredis@5.10.0)(magicast@0.5.2)
@@ -912,8 +912,8 @@ packages:
   '@kwsites/promise-deferred@1.1.1':
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
 
-  '@lucide/vue@1.0.2':
-    resolution: {integrity: sha512-zyzsMTN9L97fxe31huBiRlaR1PPXpDluql5kuooiwFMPGJqWFTBP7AKvwcfIx91zoE3NIYyc+x+mOyQ3vReyJg==}
+  '@lucide/vue@1.6.0':
+    resolution: {integrity: sha512-zgemT9UpOxoNgJA/sw+0rNQF9T7XB/GaTQAMYNT/0GkxDBiKfF5X3CFk62V6e/UorxeO56xT6/dZyIQZqgPA8Q==}
     peerDependencies:
       vue: '>=3.0.1'
 
@@ -5563,7 +5563,7 @@ snapshots:
 
   '@kwsites/promise-deferred@1.1.1': {}
 
-  '@lucide/vue@1.0.2(vue@3.5.30(typescript@5.9.2))':
+  '@lucide/vue@1.6.0(vue@3.5.30(typescript@5.9.2))':
     dependencies:
       vue: 3.5.30(typescript@5.9.2)
 
