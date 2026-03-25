@@ -55,11 +55,11 @@ importers:
         specifier: ^8.6.0
         version: 8.6.0(vue@3.5.31(typescript@5.9.2))
       graphql:
-        specifier: 16.13.1
-        version: 16.13.1
+        specifier: 16.13.2
+        version: 16.13.2
       graphql-request:
         specifier: 7.4.0
-        version: 7.4.0(graphql@16.13.1)
+        version: 7.4.0(graphql@16.13.2)
       nuxt:
         specifier: 4.4.2
         version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.27.1(@babel/core@7.29.0))(@parcel/watcher@2.5.1)(@types/node@25.5.0)(@vue/compiler-sfc@3.5.31)(cac@6.7.14)(db0@0.3.4)(eslint@9.35.0(jiti@2.6.1))(ioredis@5.10.0)(lightningcss@1.32.0)(magicast@0.5.2)(optionator@0.9.4)(pinia@3.0.4(typescript@5.9.2)(vue@3.5.31(typescript@5.9.2)))(rollup-plugin-visualizer@6.0.11(rollup@4.59.0))(rollup@4.59.0)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.44.0)(typescript@5.9.2)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.44.0)(yaml@2.8.2))(yaml@2.8.2)
@@ -3173,8 +3173,8 @@ packages:
     peerDependencies:
       graphql: 14 - 16
 
-  graphql@16.13.1:
-    resolution: {integrity: sha512-gGgrVCoDKlIZ8fIqXBBb0pPKqDgki0Z/FSKNiQzSGj2uEYHr1tq5wmBegGwJx6QB5S5cM0khSBpi/JFHMCvsmQ==}
+  graphql@16.13.2:
+    resolution: {integrity: sha512-5bJ+nf/UCpAjHM8i06fl7eLyVC9iuNAjm9qzkiu2ZGhM0VscSvS6WDPfAwkdkBuoXGM9FJSbKl6wylMwP9Ktig==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
   gzip-size@7.0.0:
@@ -5407,9 +5407,9 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@graphql-typed-document-node/core@3.2.0(graphql@16.13.1)':
+  '@graphql-typed-document-node/core@3.2.0(graphql@16.13.2)':
     dependencies:
-      graphql: 16.13.1
+      graphql: 16.13.2
 
   '@humanfs/core@0.19.1': {}
 
@@ -7814,12 +7814,12 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graphql-request@7.4.0(graphql@16.13.1):
+  graphql-request@7.4.0(graphql@16.13.2):
     dependencies:
-      '@graphql-typed-document-node/core': 3.2.0(graphql@16.13.1)
-      graphql: 16.13.1
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.13.2)
+      graphql: 16.13.2
 
-  graphql@16.13.1: {}
+  graphql@16.13.2: {}
 
   gzip-size@7.0.0:
     dependencies:
