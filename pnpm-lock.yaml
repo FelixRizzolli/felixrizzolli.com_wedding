@@ -85,10 +85,10 @@ importers:
         specifier: 0.3.2
         version: 0.3.2(typescript@5.9.2)(vue@3.5.30(typescript@5.9.2))
       vue-router:
-        specifier: 5.0.3
-        version: 5.0.3(@vue/compiler-sfc@3.5.30)(pinia@3.0.4(typescript@5.9.2)(vue@3.5.30(typescript@5.9.2)))(vue@3.5.30(typescript@5.9.2))
+        specifier: 5.0.4
+        version: 5.0.4(@vue/compiler-sfc@3.5.30)(pinia@3.0.4(typescript@5.9.2)(vue@3.5.30(typescript@5.9.2)))(vue@3.5.30(typescript@5.9.2))
       vue3-simple-icons:
-        specifier: ^16.10.0
+        specifier: 16.10.0
         version: 16.10.0(typescript@5.9.2)
     devDependencies:
       '@types/node':
@@ -4779,8 +4779,8 @@ packages:
     peerDependencies:
       vue: ^3.5.0
 
-  vue-router@5.0.3:
-    resolution: {integrity: sha512-nG1c7aAFac7NYj8Hluo68WyWfc41xkEjaR0ViLHCa3oDvTQ/nIuLJlXJX1NUPw/DXzx/8+OKMng045HHQKQKWw==}
+  vue-router@5.0.4:
+    resolution: {integrity: sha512-lCqDLCI2+fKVRl2OzXuzdSWmxXFLQRxQbmHugnRpTMyYiT+hNaycV0faqG5FBHDXoYrZ6MQcX87BvbY8mQ20Bg==}
     peerDependencies:
       '@pinia/colada': '>=0.21.2'
       '@vue/compiler-sfc': ^3.5.17
@@ -8313,7 +8313,7 @@ snapshots:
       unrouting: 0.1.5
       untyped: 2.0.0
       vue: 3.5.30(typescript@5.9.2)
-      vue-router: 5.0.3(@vue/compiler-sfc@3.5.30)(pinia@3.0.4(typescript@5.9.2)(vue@3.5.30(typescript@5.9.2)))(vue@3.5.30(typescript@5.9.2))
+      vue-router: 5.0.4(@vue/compiler-sfc@3.5.30)(pinia@3.0.4(typescript@5.9.2)(vue@3.5.30(typescript@5.9.2)))(vue@3.5.30(typescript@5.9.2))
     optionalDependencies:
       '@parcel/watcher': 2.5.1
       '@types/node': 25.5.0
@@ -9616,7 +9616,7 @@ snapshots:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.30(typescript@5.9.2)
 
-  vue-router@5.0.3(@vue/compiler-sfc@3.5.30)(pinia@3.0.4(typescript@5.9.2)(vue@3.5.30(typescript@5.9.2)))(vue@3.5.30(typescript@5.9.2)):
+  vue-router@5.0.4(@vue/compiler-sfc@3.5.30)(pinia@3.0.4(typescript@5.9.2)(vue@3.5.30(typescript@5.9.2)))(vue@3.5.30(typescript@5.9.2)):
     dependencies:
       '@babel/generator': 7.29.1
       '@vue-macros/common': 3.1.2(vue@3.5.30(typescript@5.9.2))
