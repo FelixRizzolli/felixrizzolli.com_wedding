@@ -19,6 +19,7 @@
             "description": "Enter the username and invitation token from your wedding invitation.",
             "invitationToken": "Invitation Token",
             "error": "Invalid username or invitation token. Please try again.",
+            "errorServer": "Something went wrong. Please try again later.",
             "pending": "Signing in…",
             "submit": "Sign in"
         },

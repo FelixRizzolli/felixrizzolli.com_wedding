@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { GraphQLClient } from 'graphql-request'
+import { ClientError, GraphQLClient } from 'graphql-request'
 import { AlertCircleIcon } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import GalleryView from '@/components/Gallery/View.vue'
@@ -112,8 +112,9 @@ async function fetchImages(page: number): Promise<void> {
     images.value = data.WeddingImages.docs
     totalPages.value = data.WeddingImages.totalPages
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err)
-    if (message.includes('not allowed') || message.includes('401') || message.includes('403')) {
+    // HTTP 401 = token expired / invalid; HTTP 403 = not authorised.
+    // Both cases mean the stored session is no longer valid → log out.
+    if (err instanceof ClientError && (err.response.status === 401 || err.response.status === 403)) {
       logout()
       await navigateTo('/login')
       return

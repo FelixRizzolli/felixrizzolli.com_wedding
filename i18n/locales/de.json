@@ -19,6 +19,7 @@
             "description": "Gib den Benutzernamen und den Einladungscode aus deiner Hochzeitseinladung ein.",
             "invitationToken": "Einladungscode",
             "error": "Ungültiger Benutzername oder Einladungscode. Bitte versuche es erneut.",
+            "errorServer": "Etwas ist schiefgelaufen. Bitte versuche es später erneut.",
             "pending": "Anmelden…",
             "submit": "Anmelden"
         },

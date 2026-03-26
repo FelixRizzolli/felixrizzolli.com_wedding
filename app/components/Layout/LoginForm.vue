@@ -73,6 +73,7 @@ import { Input } from '@/components/ui/input'
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '~/components/ui/input-otp'
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'vue-input-otp'
 import { useAuth } from '~/composables/useAuth'
+import { InvalidCredentialsError } from '~/stores/auth'
 
 const props = defineProps<{
   class?: HTMLAttributes['class']
@@ -103,8 +104,10 @@ async function handleSubmit() {
   try {
     await login(username.value.trim(), invitationToken.value)
     await navigateTo('/')
-  } catch {
-    errorMessage.value = t('form.login.error')
+  } catch (err) {
+    errorMessage.value = err instanceof InvalidCredentialsError
+      ? t('form.login.error')
+      : t('form.login.errorServer')
   } finally {
     isPending.value = false
   }

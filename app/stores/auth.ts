@@ -1,6 +1,21 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { GraphQLClient, gql } from 'graphql-request'
+import { ClientError, GraphQLClient, gql } from 'graphql-request'
+
+// ---------------------------------------------------------------------------
+// Error types
+// ---------------------------------------------------------------------------
+
+/**
+ * Thrown by `login()` when the API returns HTTP 403 (wrong username or token).
+ * Lets callers distinguish a bad-credentials failure from a server/network error.
+ */
+export class InvalidCredentialsError extends Error {
+  constructor() {
+    super('INVALID_CREDENTIALS')
+    this.name = 'InvalidCredentialsError'
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Types
@@ -121,10 +136,20 @@ export const useAuthStore = defineStore('auth', () => {
       mode: 'cors',
     })
 
-    const data = await client.request<LoginWithInvitationTokenResponse>(LOGIN_WITH_INVITATION_TOKEN_MUTATION, {
-      username,
-      invitationToken,
-    })
+    let data: LoginWithInvitationTokenResponse
+    try {
+      data = await client.request<LoginWithInvitationTokenResponse>(LOGIN_WITH_INVITATION_TOKEN_MUTATION, {
+        username,
+        invitationToken,
+      })
+    } catch (err) {
+      // HTTP 403 → wrong username or invitation token.
+      if (err instanceof ClientError && err.response.status === 403) {
+        throw new InvalidCredentialsError()
+      }
+      // Anything else (network error, 500, …) — re-throw as-is.
+      throw err
+    }
 
     const result = data.loginWithInvitationToken
 

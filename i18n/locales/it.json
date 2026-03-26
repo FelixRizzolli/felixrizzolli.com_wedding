@@ -19,6 +19,7 @@
             "description": "Inserisci il nome utente e il token di invito dalla tua partecipazione di nozze.",
             "invitationToken": "Token di invito",
             "error": "Nome utente o token di invito non valido. Riprova.",
+            "errorServer": "Qualcosa è andato storto. Riprova più tardi.",
             "pending": "Accesso in corso…",
             "submit": "Accedi"
         },
