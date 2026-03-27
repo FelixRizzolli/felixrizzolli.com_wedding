@@ -42,6 +42,13 @@
             "title": "Impossibile caricare le immagini",
             "description": "Riprova più tardi.",
             "retry": "Riprova"
+        },
+        "filter": {
+            "title": "Filtro",
+            "toggle": "Filtro",
+            "clearAll": "Cancella tutto",
+            "empty": "Nessuna categoria disponibile.",
+            "error": "Impossibile caricare i filtri."
         }
     },
     "nav": {

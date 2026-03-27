@@ -42,6 +42,13 @@
             "title": "Bilder konnten nicht geladen werden",
             "description": "Bitte versuche es später erneut.",
             "retry": "Erneut versuchen"
+        },
+        "filter": {
+            "title": "Filter",
+            "toggle": "Filter",
+            "clearAll": "Alle zurücksetzen",
+            "empty": "Keine Kategorien verfügbar.",
+            "error": "Filter konnten nicht geladen werden."
         }
     },
     "nav": {

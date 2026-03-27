@@ -42,6 +42,13 @@
             "title": "Could not load images",
             "description": "Please try again later.",
             "retry": "Try again"
+        },
+        "filter": {
+            "title": "Filter",
+            "toggle": "Filter",
+            "clearAll": "Clear all",
+            "empty": "No categories available.",
+            "error": "Could not load filters."
         }
     },
     "nav": {
