@@ -42,13 +42,14 @@
           />
         </button>
 
-        <!-- Filter panel: always visible on lg+, toggled on mobile -->
+        <!-- Sort + Filter panel: always visible on lg+, toggled on mobile -->
         <div
           :class="[
-            'mt-3 lg:mt-0 lg:sticky lg:top-8',
+            'mt-3 lg:mt-0 lg:sticky lg:top-8 space-y-4',
             filterOpen ? 'block' : 'hidden lg:block',
           ]"
         >
+          <GallerySort v-model:sort="sort" />
           <GalleryFilter v-model:selected-categories="selectedCategories" />
         </div>
       </aside>
@@ -58,7 +59,7 @@
 
       <!-- Gallery content -->
       <div class="flex-1 min-w-0 space-y-6">
-        <GalleryView :images="images" :is-loading="pending" />
+        <GalleryView :images="images" :is-loading="pending" :sort="sort" />
 
         <CustomPagination
           v-if="totalPages > 1"
@@ -79,15 +80,16 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import GalleryView from '@/components/Gallery/View.vue'
 import GalleryFilter from '@/components/Gallery/Filter.vue'
+import GallerySort from '@/components/Gallery/Sort.vue'
 import CustomPagination from '@/components/Custom/Pagination.vue'
 import { useAuth } from '~/composables/useAuth'
-import type { WeddingImage } from '~/types/types'
+import type { WeddingImage, GallerySort as GallerySortType } from '~/types/types'
 
 const LIMIT = 24
 
 const WEDDING_IMAGES_QUERY = `
-  query WeddingImages($page: Int, $limit: Int, $where: WeddingImage_where) {
-    WeddingImages(page: $page, limit: $limit, where: $where) {
+  query WeddingImages($page: Int, $limit: Int, $where: WeddingImage_where, $sort: String) {
+    WeddingImages(page: $page, limit: $limit, where: $where, sort: $sort) {
       docs {
         id
         ident
@@ -124,34 +126,33 @@ const pending = ref(false)
 const error = ref<Error | null>(null)
 
 const selectedCategories = ref<string[]>([])
+const sort = ref<GallerySortType>({ field: 'createdAt', direction: 'desc' })
 const filterOpen = ref(false)
+
+function buildSortString(): string {
+  const prefix = sort.value.direction === 'desc' ? '-' : ''
+  return `${prefix}${sort.value.field}`
+}
 
 async function fetchImages(page: number): Promise<void> {
   pending.value = true
   error.value = null
 
   try {
-    console.debug('[Gallery] fetchImages:', { page, limit: LIMIT, selectedCategories: selectedCategories.value })
     const headers: Record<string, string> = token.value
       ? { Authorization: `JWT ${token.value}` }
       : {}
 
     const client = new GraphQLClient(`${config.public.apiUrl}/api/graphql`, { headers })
 
-    const where =
-      selectedCategories.value.length > 0
-        ? { categories: { in: selectedCategories.value } }
-        : undefined
-
     const data = await client.request<WeddingImagesData>(WEDDING_IMAGES_QUERY, {
       page,
       limit: LIMIT,
-      where,
+      sort: buildSortString(),
     })
 
     images.value = data.WeddingImages.docs
     totalPages.value = data.WeddingImages.totalPages
-    console.debug('[Gallery] fetchImages: received', images.value.length, 'images, totalPages=', totalPages.value)
   } catch (err) {
     if (
       err instanceof ClientError &&
@@ -168,7 +169,6 @@ async function fetchImages(page: number): Promise<void> {
 }
 
 function refetch() {
-  console.debug('[Gallery] refetch requested, currentPage=', currentPage.value)
   fetchImages(currentPage.value)
 }
 
@@ -179,14 +179,18 @@ function handlePageChange(page: number) {
 }
 
 // Reset to page 1 and refetch whenever the category selection changes
-watch(selectedCategories, (newVal, oldVal) => {
-  console.debug('[Gallery] selectedCategories changed', { oldVal, newVal })
+watch(selectedCategories, () => {
+  currentPage.value = 1
+  fetchImages(1)
+}, { deep: true })
+
+// Reset to page 1 and refetch whenever sort changes
+watch(sort, () => {
   currentPage.value = 1
   fetchImages(1)
 }, { deep: true })
 
 onMounted(() => {
-  console.debug('[Gallery] mounted: initial fetchImages(1)')
   fetchImages(1)
 })
 </script>

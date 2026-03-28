@@ -4,6 +4,7 @@ export interface WeddingImage {
     cdnLink: string;
     onedriveLink: string;
     categories: Array<WeddingCategory>;
+    createdAt?: string;
 }
 
 export interface WeddingCategory {
@@ -15,4 +16,9 @@ export interface WeddingCategory {
 export interface WeddingCategoryGroup {
     id: string;
     name: string;
+}
+
+export interface GallerySort {
+    field: 'ident' | 'createdAt';
+    direction: 'asc' | 'desc';
 }

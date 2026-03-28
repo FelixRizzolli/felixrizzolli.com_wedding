@@ -43,6 +43,15 @@
             "description": "Bitte versuche es später erneut.",
             "retry": "Erneut versuchen"
         },
+        "sort": {
+            "title": "Sortierung",
+            "field": "Sortieren nach",
+            "direction": "Richtung",
+            "ident": "Bezeichner",
+            "createdAt": "Datum",
+            "asc": "Aufsteigend",
+            "desc": "Absteigend"
+        },
         "filter": {
             "title": "Filter",
             "toggle": "Filter",

@@ -43,6 +43,15 @@
             "description": "Riprova più tardi.",
             "retry": "Riprova"
         },
+        "sort": {
+            "title": "Ordinamento",
+            "field": "Ordina per",
+            "direction": "Direzione",
+            "ident": "Identificatore",
+            "createdAt": "Data",
+            "asc": "Crescente",
+            "desc": "Decrescente"
+        },
         "filter": {
             "title": "Filtro",
             "toggle": "Filtro",

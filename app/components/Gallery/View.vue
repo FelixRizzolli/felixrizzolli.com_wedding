@@ -58,13 +58,14 @@ import { ref } from 'vue'
 import { ImageIcon } from '@lucide/vue'
 import { Skeleton } from '~/components/ui/skeleton'
 import GalleryLightbox from '~/components/Gallery/Lightbox.vue'
-import type { WeddingImage } from '~/types/types'
+import type { WeddingImage, GallerySort } from '~/types/types'
 
 const SKELETON_COUNT = 12
 
 defineProps<{
   images: WeddingImage[]
   isLoading: boolean
+  sort?: GallerySort
 }>()
 
 const { t } = useI18n()
