@@ -57,7 +57,10 @@
             "toggle": "Filter",
             "clearAll": "Clear all",
             "empty": "No categories available.",
-            "error": "Could not load filters."
+            "error": "Could not load filters.",
+            "categories": "Categories",
+            "people": "People",
+            "noPeople": "No people available."
         }
     },
     "nav": {

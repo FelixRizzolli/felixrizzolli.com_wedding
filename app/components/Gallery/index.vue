@@ -50,7 +50,10 @@
           ]"
         >
           <GallerySort v-model:sort="sort" />
-          <GalleryFilter v-model:selected-categories="selectedCategories" />
+          <GalleryFilter
+            v-model:selected-categories="selectedCategories"
+            v-model:selected-users="selectedUsers"
+          />
         </div>
       </aside>
 
@@ -126,12 +129,34 @@ const pending = ref(false)
 const error = ref<Error | null>(null)
 
 const selectedCategories = ref<string[]>([])
+const selectedUsers = ref<string[]>([])
 const sort = ref<GallerySortType>({ field: 'createdAt', direction: 'desc' })
 const filterOpen = ref(false)
 
 function buildSortString(): string {
   const prefix = sort.value.direction === 'desc' ? '-' : ''
   return `${prefix}${sort.value.field}`
+}
+
+function buildWhere(): Record<string, unknown> | undefined {
+  const conditions: Record<string, unknown>[] = []
+
+  if (selectedCategories.value.length > 0) {
+    conditions.push({ categories: { in: selectedCategories.value } })
+  }
+
+  if (selectedUsers.value.length > 0) {
+    conditions.push({
+      OR: [
+        { guestsInFocus: { in: selectedUsers.value } },
+        { guestsWithAppereance: { in: selectedUsers.value } },
+      ],
+    })
+  }
+
+  if (conditions.length === 0) return undefined
+  if (conditions.length === 1) return conditions[0]
+  return { AND: conditions }
 }
 
 async function fetchImages(page: number): Promise<void> {
@@ -148,6 +173,7 @@ async function fetchImages(page: number): Promise<void> {
     const data = await client.request<WeddingImagesData>(WEDDING_IMAGES_QUERY, {
       page,
       limit: LIMIT,
+      where: buildWhere(),
       sort: buildSortString(),
     })
 
@@ -180,6 +206,12 @@ function handlePageChange(page: number) {
 
 // Reset to page 1 and refetch whenever the category selection changes
 watch(selectedCategories, () => {
+  currentPage.value = 1
+  fetchImages(1)
+}, { deep: true })
+
+// Reset to page 1 and refetch whenever the user selection changes
+watch(selectedUsers, () => {
   currentPage.value = 1
   fetchImages(1)
 }, { deep: true })

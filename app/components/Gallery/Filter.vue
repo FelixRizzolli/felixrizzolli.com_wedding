@@ -4,7 +4,7 @@
     <div class="flex items-center justify-between">
       <h3 class="text-sm font-semibold">{{ $t('gallery.filter.title') }}</h3>
       <button
-        v-if="selected.length > 0"
+        v-if="hasSelection"
         class="text-xs text-muted-foreground transition-colors hover:text-foreground"
         @click="clearAll"
       >
@@ -24,49 +24,107 @@
       {{ $t('gallery.filter.error') }}
     </p>
 
-    <!-- Category accordion (all closed by default — no defaultValue) -->
-    <Accordion v-else type="multiple" class="w-full">
-      <AccordionItem
-        v-for="group in categoryGroups"
-        :key="group.id"
-        :value="group.id"
-      >
-        <AccordionTrigger
-          class="py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:no-underline hover:text-foreground"
+    <!-- Filter content -->
+    <template v-else>
+      <!-- ── Image categories (grouped by category group) ── -->
+      <Accordion v-if="imageCategoryGroups.length" type="multiple" class="w-full">
+        <AccordionItem
+          v-for="group in imageCategoryGroups"
+          :key="group.id"
+          :value="group.id"
         >
-          {{ group.name }}
-        </AccordionTrigger>
-        <AccordionContent class="pb-3">
-          <div class="space-y-2">
-            <div
-              v-for="category in categoriesForGroup(group.id)"
-              :key="category.id"
-              class="flex items-center gap-2.5"
-            >
-              <Checkbox
-                :id="`cat-${category.id}`"
-                :model-value="isSelected(category.id)"
-                @update:model-value="(val) => toggleCategory(category.id, val === true)"
-              />
-              <label
-                :for="`cat-${category.id}`"
-                class="cursor-pointer select-none text-sm leading-none"
+          <AccordionTrigger
+            class="py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:no-underline hover:text-foreground"
+          >
+            {{ group.name }}
+          </AccordionTrigger>
+          <AccordionContent class="pb-3">
+            <div class="space-y-2">
+              <div
+                v-for="category in imageCategoriesForGroup(group.id)"
+                :key="category.id"
+                class="flex items-center gap-2.5"
               >
-                {{ category.name }}
-              </label>
+                <Checkbox
+                  :id="`cat-${category.id}`"
+                  :model-value="isCategorySelected(category.id)"
+                  @update:model-value="(val) => toggleCategory(category.id, val === true)"
+                />
+                <label
+                  :for="`cat-${category.id}`"
+                  class="cursor-pointer select-none text-sm leading-none"
+                >
+                  {{ category.name }}
+                </label>
+              </div>
+              <p v-if="!imageCategoriesForGroup(group.id).length" class="text-xs text-muted-foreground">
+                {{ $t('gallery.filter.empty') }}
+              </p>
             </div>
-            <p v-if="!categoriesForGroup(group.id).length" class="text-xs text-muted-foreground">
-              {{ $t('gallery.filter.empty') }}
-            </p>
-          </div>
-        </AccordionContent>
-      </AccordionItem>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
-      <!-- No groups at all -->
-      <p v-if="!categoryGroups.length" class="py-2 text-xs text-muted-foreground">
+      <!-- ── Separator between sections ── -->
+      <Separator v-if="imageCategoryGroups.length && peopleCategories.length" />
+
+      <!-- ── People categories with expandable users ── -->
+      <div v-if="peopleCategories.length" class="space-y-1">
+        <h4 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          {{ $t('gallery.filter.people') }}
+        </h4>
+        <Accordion type="multiple" class="w-full">
+          <AccordionItem
+            v-for="category in peopleCategories"
+            :key="category.id"
+            :value="category.id"
+          >
+            <AccordionTrigger
+              class="py-2 text-sm hover:no-underline hover:text-foreground"
+            >
+              <span class="flex items-center gap-2.5">
+                <span @click.stop @keydown.space.stop @keydown.enter.stop>
+                  <Checkbox
+                    :model-value="getPeopleCategoryState(category.id)"
+                    @update:model-value="() => togglePeopleCategory(category.id)"
+                  />
+                </span>
+                <span class="leading-none">{{ category.name }}</span>
+              </span>
+            </AccordionTrigger>
+            <AccordionContent class="pb-3">
+              <div class="space-y-2 pl-6">
+                <div
+                  v-for="user in usersForCategory(category.id)"
+                  :key="user.id"
+                  class="flex items-center gap-2.5"
+                >
+                  <Checkbox
+                    :id="`user-${user.id}`"
+                    :model-value="isUserSelected(user.id)"
+                    @update:model-value="(val) => toggleUser(user.id, val === true)"
+                  />
+                  <label
+                    :for="`user-${user.id}`"
+                    class="cursor-pointer select-none text-sm leading-none"
+                  >
+                    {{ user.username }}
+                  </label>
+                </div>
+                <p v-if="!usersForCategory(category.id).length" class="text-xs text-muted-foreground">
+                  {{ $t('gallery.filter.noPeople') }}
+                </p>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
+
+      <!-- No filters at all -->
+      <p v-if="!imageCategoryGroups.length && !peopleCategories.length" class="py-2 text-xs text-muted-foreground">
         {{ $t('gallery.filter.empty') }}
       </p>
-    </Accordion>
+    </template>
   </Card>
 </template>
 
@@ -77,9 +135,10 @@ import { Card } from '@/components/ui/card'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Separator } from '@/components/ui/separator'
 import { useAuth } from '~/composables/useAuth'
 import { useI18n } from 'vue-i18n'
-import type { WeddingCategory, WeddingCategoryGroup } from '~/types/types'
+import type { WeddingCategory, WeddingCategoryGroup, WeddingUser } from '~/types/types'
 
 const FILTER_DATA_QUERY = `
   query FilterData($locale: LocaleInputType) {
@@ -93,7 +152,17 @@ const FILTER_DATA_QUERY = `
       docs {
         id
         name
+        type
         categoryGroup {
+          id
+        }
+      }
+    }
+    WeddingUsers(limit: 500) {
+      docs {
+        id
+        username
+        categories {
           id
         }
       }
@@ -104,19 +173,23 @@ const FILTER_DATA_QUERY = `
 interface FilterData {
   WeddingCategoryGroups: { docs: WeddingCategoryGroup[] }
   WeddingCategories: { docs: WeddingCategory[] }
+  WeddingUsers: { docs: WeddingUser[] }
 }
 
 const props = withDefaults(
   defineProps<{
     selectedCategories?: string[]
+    selectedUsers?: string[]
   }>(),
   {
     selectedCategories: () => [],
+    selectedUsers: () => [],
   },
 )
 
 const emit = defineEmits<{
   'update:selected-categories': [value: string[]]
+  'update:selected-users': [value: string[]]
 }>()
 
 const config = useRuntimeConfig()
@@ -125,18 +198,32 @@ const { locale } = useI18n()
 
 const categoryGroups = ref<WeddingCategoryGroup[]>([])
 const categories = ref<WeddingCategory[]>([])
+const weddingUsers = ref<WeddingUser[]>([])
 const pending = ref(false)
 const error = ref<Error | null>(null)
 
-// Ensure the template always sees an array (avoids VLS complaining about
-// possibly undefined optional prop). Use this for template checks.
-const selected = computed(() => props.selectedCategories ?? [])
+const hasSelection = computed(() =>
+  (props.selectedCategories ?? []).length > 0 || (props.selectedUsers ?? []).length > 0,
+)
 
-function categoriesForGroup(groupId: string): WeddingCategory[] {
-  return categories.value.filter((c) => c.categoryGroup?.id === groupId)
+const imageCategories = computed(() =>
+  categories.value.filter((c) => c.type === 'images'),
+)
+
+const peopleCategories = computed(() =>
+  categories.value.filter((c) => c.type === 'people'),
+)
+
+const imageCategoryGroups = computed(() => {
+  const groupIds = new Set(imageCategories.value.map((c) => c.categoryGroup?.id))
+  return categoryGroups.value.filter((g) => groupIds.has(g.id))
+})
+
+function imageCategoriesForGroup(groupId: string): WeddingCategory[] {
+  return imageCategories.value.filter((c) => c.categoryGroup?.id === groupId)
 }
 
-function isSelected(categoryId: string): boolean {
+function isCategorySelected(categoryId: string): boolean {
   return (props.selectedCategories ?? []).includes(categoryId)
 }
 
@@ -149,12 +236,62 @@ function toggleCategory(categoryId: string, checked: boolean): void {
     if (idx !== -1) next.splice(idx, 1)
   }
   emit('update:selected-categories', next)
-  console.debug('[GalleryFilter] toggleCategory -> emitted', next, { categoryId, checked })
+}
+
+function usersForCategory(categoryId: string): WeddingUser[] {
+  return weddingUsers.value.filter((u) =>
+    u.categories?.some((c) => c.id === categoryId) ?? false,
+  )
+}
+
+function isUserSelected(userId: string): boolean {
+  return (props.selectedUsers ?? []).includes(userId)
+}
+
+function getPeopleCategoryState(categoryId: string): boolean | 'indeterminate' {
+  const users = usersForCategory(categoryId)
+  if (!users.length) return false
+  const selectedCount = users.filter((u) => (props.selectedUsers ?? []).includes(u.id)).length
+  if (selectedCount === 0) return false
+  if (selectedCount === users.length) return true
+  return 'indeterminate'
+}
+
+function togglePeopleCategory(categoryId: string): void {
+  const state = getPeopleCategoryState(categoryId)
+  const users = usersForCategory(categoryId)
+  const next = [...(props.selectedUsers ?? [])]
+
+  if (state === true) {
+    // Deselect all users in this category
+    for (const user of users) {
+      const idx = next.indexOf(user.id)
+      if (idx !== -1) next.splice(idx, 1)
+    }
+  } else {
+    // Select all users in this category (from unchecked or indeterminate)
+    for (const user of users) {
+      if (!next.includes(user.id)) next.push(user.id)
+    }
+  }
+
+  emit('update:selected-users', next)
+}
+
+function toggleUser(userId: string, checked: boolean): void {
+  const next = [...(props.selectedUsers ?? [])]
+  if (checked) {
+    if (!next.includes(userId)) next.push(userId)
+  } else {
+    const idx = next.indexOf(userId)
+    if (idx !== -1) next.splice(idx, 1)
+  }
+  emit('update:selected-users', next)
 }
 
 function clearAll(): void {
   emit('update:selected-categories', [])
-  console.debug('[GalleryFilter] clearAll -> emitted empty selection')
+  emit('update:selected-users', [])
 }
 
 async function fetchFilterData(): Promise<void> {
@@ -165,11 +302,8 @@ async function fetchFilterData(): Promise<void> {
       ? { Authorization: `JWT ${token.value}` }
       : {}
     const client = new GraphQLClient(`${config.public.apiUrl}/api/graphql`, { headers })
-    console.debug('[GalleryFilter] fetchFilterData: requesting', `${config.public.apiUrl}/api/graphql`, 'locale:', locale.value)
     const data = await client.request<FilterData>(FILTER_DATA_QUERY, { locale: locale.value })
-    // Normalize IDs to strings so UI components that expect string `value` props
-    // (AccordionItem, etc.) receive the correct type and comparisons with
-    // `selectedCategories` (string[]) work as expected.
+
     categoryGroups.value = data.WeddingCategoryGroups.docs.map((g) => ({
       ...g,
       id: String(g.id),
@@ -182,7 +316,12 @@ async function fetchFilterData(): Promise<void> {
         ? { ...c.categoryGroup, id: String(c.categoryGroup.id) }
         : c.categoryGroup,
     }))
-    console.debug('[GalleryFilter] fetchFilterData: loaded', categoryGroups.value.length, 'groups and', categories.value.length, 'categories')
+
+    weddingUsers.value = data.WeddingUsers.docs.map((u) => ({
+      ...u,
+      id: String(u.id),
+      categories: u.categories?.map((c) => ({ ...c, id: String(c.id) })),
+    }))
   } catch (err) {
     error.value = err instanceof Error ? err : new Error(String(err))
   } finally {
@@ -191,7 +330,6 @@ async function fetchFilterData(): Promise<void> {
 }
 
 onMounted(() => {
-  console.debug('[GalleryFilter] mounted: fetching filter data')
   fetchFilterData()
 })
 

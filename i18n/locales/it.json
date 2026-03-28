@@ -57,7 +57,10 @@
             "toggle": "Filtro",
             "clearAll": "Cancella tutto",
             "empty": "Nessuna categoria disponibile.",
-            "error": "Impossibile caricare i filtri."
+            "error": "Impossibile caricare i filtri.",
+            "categories": "Categorie",
+            "people": "Persone",
+            "noPeople": "Nessuna persona disponibile."
         }
     },
     "nav": {

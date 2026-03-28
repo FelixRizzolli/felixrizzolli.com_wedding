@@ -57,7 +57,10 @@
             "toggle": "Filter",
             "clearAll": "Alle zurücksetzen",
             "empty": "Keine Kategorien verfügbar.",
-            "error": "Filter konnten nicht geladen werden."
+            "error": "Filter konnten nicht geladen werden.",
+            "categories": "Kategorien",
+            "people": "Personen",
+            "noPeople": "Keine Personen verfügbar."
         }
     },
     "nav": {
