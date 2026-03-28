@@ -1,7 +1,7 @@
 export interface WeddingImage {
     id: string;
     ident: string;
-    cloudflareLink: string;
+    cdnLink: string;
     onedriveLink: string;
     categories: Array<WeddingCategory>;
 }

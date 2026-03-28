@@ -32,7 +32,7 @@
         @click="lightboxIndex = index"
       >
         <img
-          :src="image.cloudflareLink || image.onedriveLink"
+          :src="image.cdnLink || image.onedriveLink"
           :alt="`${t('gallery.imageAlt')} – ${image.ident}`"
           class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"

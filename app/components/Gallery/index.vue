@@ -91,7 +91,7 @@ const WEDDING_IMAGES_QUERY = `
       docs {
         id
         ident
-        cloudflareLink
+        cdnLink
         onedriveLink
       }
       totalDocs

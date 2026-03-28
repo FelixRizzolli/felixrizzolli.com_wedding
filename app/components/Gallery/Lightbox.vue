@@ -33,7 +33,7 @@
               class="flex items-center justify-center pl-0"
             >
               <img
-                :src="image.cloudflareLink || image.onedriveLink"
+                :src="image.cdnLink"
                 :alt="image.ident"
                 class="max-h-[82vh] max-w-full select-none rounded-lg object-contain shadow-2xl"
                 draggable="false"
