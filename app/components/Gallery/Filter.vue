@@ -71,24 +71,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { GraphQLClient } from 'graphql-request'
 import { Card } from '@/components/ui/card'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useAuth } from '~/composables/useAuth'
+import { useI18n } from 'vue-i18n'
 import type { WeddingCategory, WeddingCategoryGroup } from '~/types/types'
 
 const FILTER_DATA_QUERY = `
-  query FilterData {
-    WeddingCategoryGroups(limit: 100) {
+  query FilterData($locale: LocaleInputType) {
+    WeddingCategoryGroups(limit: 100, locale: $locale) {
       docs {
         id
         name
       }
     }
-    WeddingCategories(limit: 100) {
+    WeddingCategories(limit: 100, locale: $locale) {
       docs {
         id
         name
@@ -120,6 +121,7 @@ const emit = defineEmits<{
 
 const config = useRuntimeConfig()
 const { token } = useAuth()
+const { locale } = useI18n()
 
 const categoryGroups = ref<WeddingCategoryGroup[]>([])
 const categories = ref<WeddingCategory[]>([])
@@ -163,8 +165,8 @@ async function fetchFilterData(): Promise<void> {
       ? { Authorization: `JWT ${token.value}` }
       : {}
     const client = new GraphQLClient(`${config.public.apiUrl}/api/graphql`, { headers })
-    console.debug('[GalleryFilter] fetchFilterData: requesting', `${config.public.apiUrl}/api/graphql`)
-    const data = await client.request<FilterData>(FILTER_DATA_QUERY)
+    console.debug('[GalleryFilter] fetchFilterData: requesting', `${config.public.apiUrl}/api/graphql`, 'locale:', locale.value)
+    const data = await client.request<FilterData>(FILTER_DATA_QUERY, { locale: locale.value })
     // Normalize IDs to strings so UI components that expect string `value` props
     // (AccordionItem, etc.) receive the correct type and comparisons with
     // `selectedCategories` (string[]) work as expected.
@@ -190,6 +192,11 @@ async function fetchFilterData(): Promise<void> {
 
 onMounted(() => {
   console.debug('[GalleryFilter] mounted: fetching filter data')
+  fetchFilterData()
+})
+
+// Re-fetch translated names whenever the user switches language
+watch(locale, () => {
   fetchFilterData()
 })
 </script>
