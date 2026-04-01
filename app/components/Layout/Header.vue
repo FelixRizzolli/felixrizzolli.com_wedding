@@ -95,7 +95,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from '~/components/ui/dropdown-menu'
-import { Avatar } from '~/components/ui/avatar'
+import { Avatar, AvatarFallback } from '~/components/ui/avatar'
 import { useAuth } from '~/composables/useAuth'
 
 const { user, logout } = useAuth()
