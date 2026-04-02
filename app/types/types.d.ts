@@ -10,12 +10,21 @@ export interface WeddingImage {
 export interface WeddingCategory {
     id: string;
     name: string;
-    categoryGroup: WeddingCategoryGroup;
+    type?: 'images' | 'people' | string;
+    categoryGroup?: WeddingCategoryGroup | null;
 }
 
 export interface WeddingCategoryGroup {
     id: string;
     name: string;
+}
+
+export interface WeddingUser {
+    id: string;
+    username: string;
+    categories?: Array<{
+        id: string;
+    }>;
 }
 
 export interface GallerySort {

@@ -68,51 +68,68 @@
       <!-- ── Separator between sections ── -->
       <Separator v-if="imageCategoryGroups.length && peopleCategories.length" />
 
-      <!-- ── People categories with expandable users ── -->
-      <div v-if="peopleCategories.length" class="space-y-1">
-        <h4 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          {{ $t('gallery.filter.people') }}
-        </h4>
+      <!-- ── People categories grouped by category group, each category expandable to show users ── -->
+      <div v-if="peopleCategoryGroups.length" class="space-y-1">
         <Accordion type="multiple" class="w-full">
           <AccordionItem
-            v-for="category in peopleCategories"
-            :key="category.id"
-            :value="category.id"
+            v-for="group in peopleCategoryGroups"
+            :key="group.id"
+            :value="group.id"
           >
             <AccordionTrigger
-              class="py-2 text-sm hover:no-underline hover:text-foreground"
+              class="py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:no-underline hover:text-foreground"
             >
-              <span class="flex items-center gap-2.5">
-                <span @click.stop @keydown.space.stop @keydown.enter.stop>
-                  <Checkbox
-                    :model-value="getPeopleCategoryState(category.id)"
-                    @update:model-value="() => togglePeopleCategory(category.id)"
-                  />
-                </span>
-                <span class="leading-none">{{ category.name }}</span>
-              </span>
+              {{ group.name }}
             </AccordionTrigger>
             <AccordionContent class="pb-3">
-              <div class="space-y-2 pl-6">
-                <div
-                  v-for="user in usersForCategory(category.id)"
-                  :key="user.id"
-                  class="flex items-center gap-2.5"
-                >
-                  <Checkbox
-                    :id="`user-${user.id}`"
-                    :model-value="isUserSelected(user.id)"
-                    @update:model-value="(val) => toggleUser(user.id, val === true)"
-                  />
-                  <label
-                    :for="`user-${user.id}`"
-                    class="cursor-pointer select-none text-sm leading-none"
+              <div class="space-y-2">
+                <Accordion type="multiple" class="w-full">
+                  <AccordionItem
+                    v-for="category in peopleCategoriesForGroup(group.id)"
+                    :key="category.id"
+                    :value="category.id"
                   >
-                    {{ user.username }}
-                  </label>
-                </div>
-                <p v-if="!usersForCategory(category.id).length" class="text-xs text-muted-foreground">
-                  {{ $t('gallery.filter.noPeople') }}
+                    <AccordionTrigger
+                      class="py-2 text-sm hover:no-underline hover:text-foreground"
+                    >
+                      <span class="flex items-center gap-2.5">
+                        <span @click.stop @keydown.space.stop @keydown.enter.stop>
+                          <Checkbox
+                            :model-value="getPeopleCategoryState(category.id)"
+                            @update:model-value="() => togglePeopleCategory(category.id)"
+                          />
+                        </span>
+                        <span class="leading-none">{{ category.name }}</span>
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent class="pb-3">
+                      <div class="space-y-2 pl-6">
+                        <div
+                          v-for="user in usersForCategory(category.id)"
+                          :key="user.id"
+                          class="flex items-center gap-2.5"
+                        >
+                          <Checkbox
+                            :id="`user-${user.id}`"
+                            :model-value="isUserSelected(user.id)"
+                            @update:model-value="(val) => toggleUser(user.id, val === true)"
+                          />
+                          <label
+                            :for="`user-${user.id}`"
+                            class="cursor-pointer select-none text-sm leading-none"
+                          >
+                            {{ user.username }}
+                          </label>
+                        </div>
+                        <p v-if="!usersForCategory(category.id).length" class="text-xs text-muted-foreground">
+                          {{ $t('gallery.filter.noPeople') }}
+                        </p>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+                <p v-if="!peopleCategoriesForGroup(group.id).length" class="text-xs text-muted-foreground">
+                  {{ $t('gallery.filter.empty') }}
                 </p>
               </div>
             </AccordionContent>
@@ -138,7 +155,16 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator'
 import { useAuth } from '~/composables/useAuth'
 import { useI18n } from 'vue-i18n'
-import type { WeddingCategory, WeddingCategoryGroup, WeddingUser } from '~/types/types'
+import type { WeddingCategory, WeddingCategoryGroup } from '~/types/types'
+
+// Minimal WeddingUser type used by this component. The project also
+// generates richer payload-types elsewhere; keep a local lightweight type
+// here to avoid depending on the generated API types in the frontend bundle.
+interface WeddingUser {
+  id: string
+  username: string
+  categories?: { id: string }[]
+}
 
 const FILTER_DATA_QUERY = `
   query FilterData($locale: LocaleInputType) {
@@ -219,8 +245,17 @@ const imageCategoryGroups = computed(() => {
   return categoryGroups.value.filter((g) => groupIds.has(g.id))
 })
 
+const peopleCategoryGroups = computed(() => {
+  const groupIds = new Set(peopleCategories.value.map((c) => c.categoryGroup?.id))
+  return categoryGroups.value.filter((g) => groupIds.has(g.id))
+})
+
 function imageCategoriesForGroup(groupId: string): WeddingCategory[] {
   return imageCategories.value.filter((c) => c.categoryGroup?.id === groupId)
+}
+
+function peopleCategoriesForGroup(groupId: string): WeddingCategory[] {
+  return peopleCategories.value.filter((c) => c.categoryGroup?.id === groupId)
 }
 
 function isCategorySelected(categoryId: string): boolean {
